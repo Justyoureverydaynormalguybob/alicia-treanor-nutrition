@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutrition Talk Feedback Form</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(45deg, #ff9a9e, #fecfef, #fecfef, #ffd6cc);
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .feedback-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 3px solid #4CAF50;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 3px dotted #4CAF50;
+            padding-bottom: 20px;
+        }
+        
+        .header h1 {
+            color: #4CAF50;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .header .emoji {
+            font-size: 40px;
+            margin: 0 10px;
+        }
+        
+        .section {
+            margin-bottom: 25px;
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 5px solid #4CAF50;
+        }
+        
+        .section h3 {
+            color: #4CAF50;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .question {
+            margin-bottom: 20px;
+        }
+        
+        .question label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #333;
+            font-size: 14px;
+        }
+        
+        .emoji-rating {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .emoji-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .emoji-option:hover {
+            background: #e8f5e8;
+            border-color: #4CAF50;
+        }
+        
+        .emoji-option input[type="radio"] {
+            margin-bottom: 5px;
+            transform: scale(1.2);
+        }
+        
+        .emoji-face {
+            font-size: 30px;
+            margin-bottom: 5px;
+        }
+        
+        .emoji-text {
+            font-size: 12px;
+            font-weight: bold;
+            text-align: center;
+            color: #666;
+        }
+        
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+            transition: all 0.3s ease;
+        }
+        
+        .checkbox-item:hover {
+            border-color: #4CAF50;
+        }
+        
+        .checkbox-item input[type="checkbox"] {
+            margin-right: 8px;
+            transform: scale(1.2);
+        }
+        
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            font-size: 14px;
+            resize: vertical;
+            min-height: 80px;
+        }
+        
+        textarea:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+        
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            font-size: 14px;
+        }
+        
+        input[type="text"]:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+        
+        .fun-fact-box {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+        
+        .school-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .thank-you {
+            text-align: center;
+            background: #e8f5e8;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+        
+        .thank-you h3 {
+            color: #4CAF50;
+            margin-bottom: 10px;
+        }
+        
+        @media (max-width: 600px) {
+            .feedback-form {
+                padding: 20px;
+                margin: 10px;
+            }
+            
+            .emoji-rating {
+                justify-content: center;
+            }
+            
+            .school-info {
+                grid-template-columns: 1fr;
+            }
+            
+            .checkbox-group {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            
+            .feedback-form {
+                box-shadow: none;
+                border: 2px solid #4CAF50;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="feedback-form">
+        <div class="header">
+            <span class="emoji">🍎</span>
+            <h1>Nutrition Talk Feedback</h1>
+            <span class="emoji">🥗</span>
+            <p><strong>Help me make future talks even better!</strong></p>
+        </div>
+
+        <!-- School Information -->
+        <div class="section">
+            <h3>🏫 About You</h3>
+            <div class="school-info">
+                <div class="question">
+                    <label>School Name:</label>
+                    <input type="text" name="school">
+                </div>
+                <div class="question">
+                    <label>Your Age:</label>
+                    <input type="text" name="age">
+                </div>
+            </div>
+            <div class="question">
+                <label>Date of Talk:</label>
+                <input type="text" name="date">
+            </div>
+        </div>
+
+        <!-- Overall Rating -->
+        <div class="section">
+            <h3>⭐ Overall Rating</h3>
+            <div class="question">
+                <label>How much did you enjoy the nutrition talk?</label>
+                <div class="emoji-rating">
+                    <div class="emoji-option">
+                        <input type="radio" name="overall_rating" value="loved_it">
+                        <div class="emoji-face">🤩</div>
+                        <div class="emoji-text">LOVED IT!</div>
+                    </div>
+                    <div class="emoji-option">
+                        <input type="radio" name="overall_rating" value="really_good">
+                        <div class="emoji-face">😊</div>
+                        <div class="emoji-text">Really Good</div>
+                    </div>
+                    <div class="emoji-option">
+                        <input type="radio" name="overall_rating" value="okay">
+                        <div class="emoji-face">😐</div>
+                        <div class="emoji-text">It was OK</div>
+                    </div>
+                    <div class="emoji-option">
+                        <input type="radio" name="overall_rating" value="boring">
+                        <div class="emoji-face">😴</div>
+                        <div class="emoji-text">A bit boring</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- What Did You Learn -->
+        <div class="section">
+            <h3>🧠 What Did You Learn?</h3>
+            <div class="question">
+                <label>Tick all the things you learned about today:</label>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="learned" value="healthy_snacks">
+                        <label>🍎 Healthy snacks</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="learned" value="water_importance">
+                        <label>💧 Why water is important</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="learned" value="energy_foods">
+                        <label>⚡ Foods that give energy</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="learned" value="sports_nutrition">
+                        <label>🏃‍♂️ Sports nutrition</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="learned" value="food_groups">
+                        <label>🥕 Different food groups</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="learned" value="lunch_ideas">
+                        <label>🥪 Better lunch ideas</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Favorite Parts -->
+        <div class="section">
+            <h3>❤️ What Was Your Favorite Part?</h3>
+            <div class="question">
+                <label>What did you like most about the talk?</label>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="favorite" value="games">
+                        <label>🎮 Fun games/activities</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="favorite" value="stories">
+                        <label>📚 Stories and examples</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="favorite" value="questions">
+                        <label>❓ Asking questions</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="favorite" value="food_tasting">
+                        <label>👅 Tasting different foods</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="favorite" value="group_work">
+                        <label>👥 Working in groups</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="favorite" value="presenter">
+                        <label>👩‍🏫 The presenter (Alicia!)</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Understanding Check -->
+        <div class="section">
+            <h3>💡 How Clear Was Everything?</h3>
+            <div class="question">
+                <label>Was everything easy to understand?</label>
+                <div class="emoji-rating">
+                    <div class="emoji-option">
+                        <input type="radio" name="understanding" value="very_clear">
+                        <div class="emoji-face">🤓</div>
+                        <div class="emoji-text">Super Clear</div>
+                    </div>
+                    <div class="emoji-option">
+                        <input type="radio" name="understanding" value="mostly_clear">
+                        <div class="emoji-face">😊</div>
+                        <div class="emoji-text">Mostly Clear</div>
+                    </div>
+                    <div class="emoji-option">
+                        <input type="radio" name="understanding" value="some_confusing">
+                        <div class="emoji-face">🤔</div>
+                        <div class="emoji-text">Some Bits Confusing</div>
+                    </div>
+                    <div class="emoji-option">
+                        <input type="radio" name="understanding" value="hard_to_follow">
+                        <div class="emoji-face">😵</div>
+                        <div class="emoji-text">Hard to Follow</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Changes You'll Make -->
+        <div class="section">
+            <h3>🔄 Will You Change Anything?</h3>
+            <div class="question">
+                <label>What will you do differently after today's talk?</label>
+                <textarea name="changes" placeholder="Example: I'll eat more fruit, drink more water, try new vegetables..."></textarea>
+            </div>
+        </div>
+
+        <!-- What Could Be Better -->
+        <div class="section">
+            <h3>⚡ How Can I Make It Even Better?</h3>
+            <div class="question">
+                <label>What would make the talk more fun or interesting?</label>
+                <textarea name="improvements" placeholder="Example: more games, different activities, longer/shorter talk..."></textarea>
+            </div>
+        </div>
+
+        <!-- Fun Question -->
+        <div class="section">
+            <h3>🎉 Fun Question!</h3>
+            <div class="question">
+                <label>If you could create a new healthy snack, what would it be?</label>
+                <textarea name="fun_snack" placeholder="Be creative! Mix any healthy ingredients you want..."></textarea>
+            </div>
+        </div>
+
+        <div class="fun-fact-box">
+            <span style="font-size: 24px;">🌟</span> 
+            Thank you for helping me become a better nutrition educator! 
+            <span style="font-size: 24px;">🌟</span>
+        </div>
+
+        <div class="thank-you">
+            <h3>Keep Being Awesome! 🚀</h3>
+            <p>Remember: Small changes make a big difference to your health and energy!</p>
+            <p><strong>- Alicia 🍎</strong></p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutrition Talk Feedback - Online Form</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(45deg, #ff9a9e, #fecfef, #fecfef, #ffd6cc);
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .feedback-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 3px solid #4CAF50;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 3px dotted #4CAF50;
+            padding-bottom: 20px;
+        }
+        
+        .header h1 {
+            color: #4CAF50;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .header .emoji {
+            font-size: 40px;
+            margin: 0 10px;
+        }
+        
+        .section {
+            margin-bottom: 25px;
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 5px solid #4CAF50;
+        }
+        
+        .section h3 {
+            color: #4CAF50;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .question {
+            margin-bottom: 20px;
+        }
+        
+        .question label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #333;
+            font-size: 14px;
+        }
+        
+        .required {
+            color: #ff4444;
+        }
+        
+        .emoji-rating {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .emoji-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+        }
+        
+        .emoji-option:hover {
+            background: #e8f5e8;
+            border-color: #4CAF50;
+        }
+        
+        .emoji-option input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+        
+        .emoji-option input[type="radio"]:checked + .emoji-face {
+            transform: scale(1.2);
+            filter: brightness(1.2);
+        }
+        
+        .emoji-option input[type="radio"]:checked ~ .emoji-text {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        
+        .emoji-face {
+            font-size: 30px;
+            margin-bottom: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .emoji-text {
+            font-size: 12px;
+            font-weight: bold;
+            text-align: center;
+            color: #666;
+            transition: all 0.3s ease;
+        }
+        
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .checkbox-item:hover {
+            border-color: #4CAF50;
+        }
+        
+        .checkbox-item input[type="checkbox"] {
+            margin-right: 8px;
+            transform: scale(1.2);
+            cursor: pointer;
+        }
+        
+        .checkbox-item input[type="checkbox"]:checked + label {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            font-size: 14px;
+            resize: vertical;
+            min-height: 80px;
+            box-sizing: border-box;
+        }
+        
+        textarea:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+        
+        input[type="text"], input[type="number"], input[type="date"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        
+        input[type="text"]:focus, input[type="number"]:focus, input[type="date"]:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+        
+        .school-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .submit-section {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background: #e8f5e8;
+            border-radius: 15px;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(76, 175, 80, 0.4);
+        }
+        
+        .submit-btn:active {
+            transform: translateY(-1px);
+        }
+        
+        .success-message {
+            display: none;
+            background: #4CAF50;
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 20px;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        
+        .error-message {
+            display: none;
+            background: #ff4444;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 10px;
+            text-align: center;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @media (max-width: 600px) {
+            .feedback-form {
+                padding: 20px;
+                margin: 10px;
+            }
+            
+            .emoji-rating {
+                justify-content: center;
+            }
+            
+            .school-info {
+                grid-template-columns: 1fr;
+            }
+            
+            .checkbox-group {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Form validation styles */
+        .required-field {
+            border-color: #ff4444 !important;
+        }
+        
+        .validation-message {
+            color: #ff4444;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <form class="feedback-form" id="feedbackForm" method="POST">
+        <div class="header">
+            <span class="emoji">🍎</span>
+            <h1>Nutrition Talk Feedback</h1>
+            <span class="emoji">🥗</span>
+            <p><strong>Help me make future talks even better!</strong></p>
+        </div>
+
+        <!-- School Information -->
+        <div class="section">
+            <h3>🏫 About You</h3>
+            <div class="school-info">
+                <div class="question">
+                    <label>School Name: <span class="required">*</span></label>
+                    <input type="text" name="school" required>
+                    <div class="validation-message">Please enter your school name</div>
+                </div>
+                <div class="question">
+                    <label>Your Age: <span class="required">*</span></label>
+                    <input type="number" name="age" min="5" max="18" required>
+                    <div class="validation-message">Please enter your age</div>
+                </div>
+            </div>
+            <div class="question">
+                <label>Date of Talk: <span class="required">*</span></label>
+                <input type="date" name="date" required>
+                <div class="validation-message">Please select the date</div>
+            </div>
+        </div>
+
+        <!-- Overall Rating -->
+        <div class="section">
+            <h3>⭐ Overall Rating</h3>
+            <div class="question">
+                <label>How much did you enjoy the nutrition talk? <span class="required">*</span></label>
+                <div class="emoji-rating">
+                    <div class="emoji-option">
+                        <input type="radio" name="overall_rating" value="loved_it" id="loved_it" required>
+                        <div class="emoji-face">🤩</div>
+                        <div class="emoji-text">LOVED IT!</div>
+                    </div>
+                    <div class="emoji-option">
+                        <input type="radio" name="overall_rating" value="really_good" id="really_good">
+                        <div class="emoji-face">😊</div>
+                        <div class="emoji-text">Really Good</div>
+                    </div>
+                    <div class="emoji-option">
+                        <input type="radio" name="overall_rating" value="okay" id="okay">
+                        <div class="emoji-face">😐</div>
+                        <div class="emoji-text">It was OK</div>
+                    </div>
+                    <div class="emoji-option">
+                        <input type="radio" name="overall_rating" value="boring" id="boring">
+                        <div class="emoji-face">😴</div>
+                        <div class="emoji-text">A bit boring</div>
+                    </div>
+                </div>
+                <div class="validation-message">Please select a rating</div>
+            </div>
+        </div>
+
+        <!-- What Did You Learn -->
+        <div class="section">
+            <h3>🧠 What Did You Learn?</h3>
+            <div class="question">
+                <label>Tick all the things you learned about today:</label>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="learned" value="healthy_snacks" id="healthy_snacks">
+                        <label for="healthy_snacks">🍎 Healthy snacks</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="learned" value="water_importance" id="water_importance">
+                        <label for="water_importance">💧 Why water is important</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="learned" value="energy_foods" id="energy_foods">
+                        <label for="energy_foods">⚡ Foods that give energy</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="learned" value="sports_nutrition" id="sports_nutrition">
+                        <label for="sports_nutrition">🏃‍♂️ Sports nutrition</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="learned" value="food_groups" id="food_groups">
+                        <label for="food_groups">🥕 Different food groups</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="learned" value="lunch_ideas" id="lunch_ideas">
+                        <label for="lunch_ideas">🥪 Better lunch ideas</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Favorite Parts -->
+        <div class="section">
+            <h3>❤️ What Was Your Favorite Part?</h3>
+            <div class="question">
+                <label>What did you like most about the talk?</label>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="favorite" value="games" id="games">
+                        <label for="games">🎮 Fun games/activities</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="favorite" value="stories" id="stories">
+                        <label for="stories">📚 Stories and examples</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="favorite" value="questions" id="questions">
+                        <label for="questions">❓ Asking questions</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="favorite" value="food_tasting" id="food_tasting">
+                        <label for="food_tasting">👅 Tasting different foods</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="favorite" value="group_work" id="group_work">
+                        <label for="group_work">👥 Working in groups</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="favorite" value="presenter" id="presenter">
+                        <label for="presenter">👩‍🏫 The presenter (Alicia!)</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Understanding Check -->
+        <div class="section">
+            <h3>💡 How Clear Was Everything?</h3>
+            <div class="question">
+                <label>Was everything easy to understand? <span class="required">*</span></label>
+                <div class="emoji-rating">
+                    <div class="emoji-option">
+                        <input type="radio" name="understanding" value="very_clear" id="very_clear" required>
+                        <div class="emoji-face">🤓</div>
+                        <div class="emoji-text">Super Clear</div>
+                    </div>
+                    <div class="emoji-option">
+                        <input type="radio" name="understanding" value="mostly_clear" id="mostly_clear">
+                        <div class="emoji-face">😊</div>
+                        <div class="emoji-text">Mostly Clear</div>
+                    </div>
+                    <div class="emoji-option">
+                        <input type="radio" name="understanding" value="some_confusing" id="some_confusing">
+                        <div class="emoji-face">🤔</div>
+                        <div class="emoji-text">Some Bits Confusing</div>
+                    </div>
+                    <div class="emoji-option">
+                        <input type="radio" name="understanding" value="hard_to_follow" id="hard_to_follow">
+                        <div class="emoji-face">😵</div>
+                        <div class="emoji-text">Hard to Follow</div>
+                    </div>
+                </div>
+                <div class="validation-message">Please select how clear everything was</div>
+            </div>
+        </div>
+
+        <!-- Changes You'll Make -->
+        <div class="section">
+            <h3>🔄 Will You Change Anything?</h3>
+            <div class="question">
+                <label>What will you do differently after today's talk?</label>
+                <textarea name="changes" placeholder="Example: I'll eat more fruit, drink more water, try new vegetables..."></textarea>
+            </div>
+        </div>
+
+        <!-- What Could Be Better -->
+        <div class="section">
+            <h3>⚡ How Can I Make It Even Better?</h3>
+            <div class="question">
+                <label>What would make the talk more fun or interesting?</label>
+                <textarea name="improvements" placeholder="Example: more games, different activities, longer/shorter talk..."></textarea>
+            </div>
+        </div>
+
+        <!-- Fun Question -->
+        <div class="section">
+            <h3>🎉 Fun Question!</h3>
+            <div class="question">
+                <label>If you could create a new healthy snack, what would it be?</label>
+                <textarea name="fun_snack" placeholder="Be creative! Mix any healthy ingredients you want..."></textarea>
+            </div>
+        </div>
+
+        <!-- Submit Section -->
+        <div class="submit-section">
+            <div class="loading" id="loadingMessage">
+                <p>📤 Sending your feedback...</p>
+            </div>
+            <div class="error-message" id="errorMessage">
+                <p>❌ Something went wrong. Please try again!</p>
+            </div>
+            <button type="submit" class="submit-btn" id="submitBtn">
+                🚀 Send My Feedback!
+            </button>
+            <p style="font-size: 12px; color: #666; margin-top: 10px;">
+                Thanks for helping me improve! 🌟
+            </p>
+        </div>
+
+        <!-- Success Message -->
+        <div class="success-message" id="successMessage">
+            <h3>🎉 Thank You So Much!</h3>
+            <p>Your feedback has been received! It will help me make future nutrition talks even more awesome.</p>
+            <p><strong>Keep making healthy choices! 💪</strong></p>
+            <p style="margin-top: 15px; font-size: 24px;">🍎 🥗 💧 🏃‍♂️</p>
+        </div>
+    </form>
+
+    <script>
+        // Form handling
+        const form = document.getElementById('feedbackForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const loadingMessage = document.getElementById('loadingMessage');
+        const successMessage = document.getElementById('successMessage');
+        const errorMessage = document.getElementById('errorMessage');
+
+        // Add click event listeners to emoji options
+        document.querySelectorAll('.emoji-option').forEach(option => {
+            option.addEventListener('click', function() {
+                const radio = this.querySelector('input[type="radio"]');
+                if (radio) {
+                    radio.checked = true;
+                }
+            });
+        });
+
+        // Form validation
+        function validateForm() {
+            let isValid = true;
+            const requiredFields = form.querySelectorAll('[required]');
+            
+            requiredFields.forEach(field => {
+                const validationMessage = field.parentNode.querySelector('.validation-message');
+                
+                if (!field.value || (field.type === 'radio' && !form.querySelector(`input[name="${field.name}"]:checked`))) {
+                    field.classList.add('required-field');
+                    if (validationMessage) validationMessage.style.display = 'block';
+                    isValid = false;
+                } else {
+                    field.classList.remove('required-field');
+                    if (validationMessage) validationMessage.style.display = 'none';
+                }
+            });
+
+            // Check radio button groups
+            const radioGroups = ['overall_rating', 'understanding'];
+            radioGroups.forEach(groupName => {
+                const group = form.querySelector(`input[name="${groupName}"]`);
+                const isChecked = form.querySelector(`input[name="${groupName}"]:checked`);
+                const validationMessage = group.closest('.question').querySelector('.validation-message');
+                
+                if (!isChecked) {
+                    if (validationMessage) validationMessage.style.display = 'block';
+                    isValid = false;
+                } else {
+                    if (validationMessage) validationMessage.style.display = 'none';
+                }
+            });
+
+            return isValid;
+        }
+
+        // Form submission
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            if (!validateForm()) {
+                // Scroll to first error
+                const firstError = form.querySelector('.required-field, .validation-message[style*="block"]');
+                if (firstError) {
+                    firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+                return;
+            }
+
+            // Show loading state
+            submitBtn.style.display = 'none';
+            loadingMessage.style.display = 'block';
+            errorMessage.style.display = 'none';
+
+            // Collect form data
+            const formData = new FormData(form);
+            const data = {};
+            
+            // Handle regular inputs
+            for (let [key, value] of formData.entries()) {
+                if (data[key]) {
+                    // Handle multiple values (checkboxes)
+                    if (Array.isArray(data[key])) {
+                        data[key].push(value);
+                    } else {
+                        data[key] = [data[key], value];
+                    }
+                } else {
+                    data[key] = value;
+                }
+            }
+
+            // Add timestamp
+            data.submitted_at = new Date().toISOString();
+
+            try {
+                // Submit to your Hostinger PHP handler
+                const response = await fetch('feedback-handler.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (response.ok && result.success) {
+                    // Success
+                    form.style.display = 'none';
+                    successMessage.style.display = 'block';
+                    successMessage.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                    throw new Error(result.message || 'Submission failed');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                loadingMessage.style.display = 'none';
+                errorMessage.style.display = 'block';
+                submitBtn.style.display = 'block';
+            }
+        });
+
+        // Clear validation on input
+        form.addEventListener('input', function(e) {
+            if (e.target.classList.contains('required-field')) {
+                e.target.classList.remove('required-field');
+                const validationMessage = e.target.parentNode.querySelector('.validation-message');
+                if (validationMessage) validationMessage.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
