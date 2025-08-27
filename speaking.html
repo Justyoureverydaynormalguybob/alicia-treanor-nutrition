@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speaking & Events - Alicia Treanor Nutrition</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            color: #333;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 300;
+            color: #333;
+            letter-spacing: 1px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 3rem;
+        }
+
+        nav a {
+            color: #333;
+            text-decoration: none;
+            font-weight: 400;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover, nav a.active {
+            color: #666;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -5px;
+            left: 0;
+            background-color: #666;
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after, nav a.active::after {
+            width: 100%;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 100px;
+            padding: 4rem 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Speaking Header */
+        .speaking-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            padding: 4rem 0;
+            background: white;
+            margin-top: -4rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .speaking-header h1 {
+            font-size: 3rem;
+            font-weight: 300;
+            color: #333;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .speaking-header p {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* Quick Stats */
+        .quick-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: #333;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Calendar and Booking Section */
+        .calendar-booking {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .calendar-section,
+        .booking-section {
+            background: white;
+            padding: 3rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 300;
+            color: #333;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        /* Simple Calendar */
+        .calendar {
+            max-width: 100%;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border: 1px solid #eee;
+        }
+
+        .calendar-month {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #333;
+            text-align: center;
+            flex: 1;
+        }
+
+        .calendar-nav {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            color: #666;
+            transition: color 0.3s ease;
+        }
+
+        .calendar-nav:hover {
+            color: #333;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1px;
+            border: 1px solid #eee;
+            background: #eee;
+        }
+
+        .calendar-day-header {
+            background: #333;
+            color: white;
+            padding: 1rem 0.5rem;
+            text-align: center;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .calendar-day {
+            background: white;
+            padding: 1rem 0.5rem;
+            text-align: center;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .calendar-day:hover {
+            background: #f8f9fa;
+        }
+
+        .calendar-day.other-month {
+            color: #ccc;
+            background: #f9f9f9;
+        }
+
+        .calendar-day.available {
+            background: #e8f5e8;
+            color: #2c5530;
+            font-weight: 500;
+        }
+
+        .calendar-day.booked {
+            background: #ffe6e6;
+            color: #cc0000;
+            font-weight: 500;
+        }
+
+        .calendar-day.available::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            background: #4caf50;
+            border-radius: 50%;
+        }
+
+        .calendar-day.booked::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            background: #cc0000;
+            border-radius: 50%;
+        }
+
+        /* Calendar Legend */
+        .calendar-legend {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .legend-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .legend-dot.available { background: #4caf50; }
+        .legend-dot.booked { background: #cc0000; }
+
+        /* Booking Form */
+        .booking-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #333;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 1rem;
+            border: 1px solid #ddd;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #333;
+        }
+
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        .submit-booking {
+            background: #333;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: background 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .submit-booking:hover {
+            background: #555;
+        }
+
+        /* Speaking Topics */
+        .speaking-topics {
+            background: white;
+            padding: 4rem 3rem;
+            margin-bottom: 4rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .topic-card {
+            border: 1px solid #eee;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .topic-card:hover {
+            border-color: #333;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .topic-card h3 {
+            font-size: 1.3rem;
+            font-weight: 400;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .topic-card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .topic-details {
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        .topic-details span {
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            background: #333;
+            color: white;
+            padding: 4rem 0;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .testimonial-author {
+            font-weight: 500;
+            color: #f0f0f0;
+        }
+
+        .testimonial-school {
+            font-size: 0.9rem;
+            color: #ccc;
+            margin-top: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        footer p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                gap: 1.5rem;
+            }
+
+            .speaking-header h1 {
+                font-size: 2rem;
+            }
+
+            .calendar-booking {
+                grid-template-columns: 1fr;
+            }
+
+            .calendar-section,
+            .booking-section {
+                padding: 2rem;
+            }
+
+            .speaking-topics {
+                padding: 3rem 2rem;
+            }
+
+            .calendar-day-header {
+                padding: 0.5rem 0.25rem;
+                font-size: 0.7rem;
+            }
+
+            .calendar-day {
+                padding: 0.5rem 0.25rem;
+                min-height: 40px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">ALICIA TREANOR NUTRITION</div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="resources.html">Resources</a></li>
+                <li><a href="speaking.html" class="active">Speaking</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Speaking Header -->
+        <section class="speaking-header">
+            <div class="container">
+                <h1>Speaking & Events</h1>
+                <p>Engaging, evidence-based nutrition education for schools, teams, and organizations. Book interactive workshops that inspire healthy eating habits and performance optimization.</p>
+            </div>
+        </section>
+
+        <div class="container">
+            <!-- Quick Stats -->
+            <div class="quick-stats">
+                <div class="stat-card">
+                    <span class="stat-number">150+</span>
+                    <span class="stat-label">Schools Visited</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">8,000+</span>
+                    <span class="stat-label">Students Reached</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">95%</span>
+                    <span class="stat-label">Rebooking Rate</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">4.9/5</span>
+                    <span class="stat-label">Teacher Rating</span>
+                </div>
+            </div>
+
+            <!-- Calendar and Booking -->
+            <div class="calendar-booking">
+                <!-- Calendar Section -->
+                <div class="calendar-section">
+                    <h2 class="section-title">Availability Calendar</h2>
+                    <div class="calendar">
+                        <div class="calendar-header">
+                            <button class="calendar-nav" id="prevMonth">‹</button>
+                            <div class="calendar-month" id="currentMonth">April 2025</div>
+                            <button class="calendar-nav" id="nextMonth">›</button>
+                        </div>
+                        <div class="calendar-grid" id="calendarGrid">
+                            <!-- Calendar will be generated by JavaScript -->
+                        </div>
+                        <div class="calendar-legend">
+                            <div class="legend-item">
+                                <div class="legend-dot available"></div>
+                                <span>Available</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-dot booked"></div>
+                                <span>Booked</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Booking Form -->
+                <div class="booking-section">
+                    <h2 class="section-title">Request a Speaking Engagement</h2>
+                    <form class="booking-form" id="bookingForm">
+                        <div class="form-group">
+                            <label for="organizationName">Organization/School Name</label>
+                            <input type="text" id="organizationName" name="organizationName" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contactName">Contact Person</label>
+                            <input type="text" id="contactName" name="contactName" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="audienceType">Audience Type</label>
+                            <select id="audienceType" name="audienceType" required>
+                                <option value="">Select audience type</option>
+                                <option value="primary-school">Primary School (Ages 5-12)</option>
+                                <option value="secondary-school">Secondary School (Ages 13-18)</option>
+                                <option value="sports-team">Sports Team/Club</option>
+                                <option value="staff-training">Teacher/Staff Training</option>
+                                <option value="community-group">Community Group</option>
+                                <option value="corporate">Corporate Event</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="audienceSize">Expected Audience Size</label>
+                            <input type="number" id="audienceSize" name="audienceSize" min="1" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="preferredDate">Preferred Date</label>
+                            <input type="date" id="preferredDate" name="preferredDate" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="topicInterest">Topic of Interest</label>
+                            <select id="topicInterest" name="topicInterest" required>
+                                <option value="">Select a topic</option>
+                                <option value="healthy-eating-basics">Healthy Eating Basics</option>
+                                <option value="sports-nutrition">Sports Nutrition for Young Athletes</option>
+                                <option value="lunch-box-nutrition">Smart Lunch Box Choices</option>
+                                <option value="teen-nutrition">Nutrition for Teenagers</option>
+                                <option value="performance-nutrition">Performance & Recovery Nutrition</option>
+                                <option value="custom">Custom Topic (describe below)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="additionalInfo">Additional Information</label>
+                            <textarea id="additionalInfo" name="additionalInfo" placeholder="Please share any specific requirements, learning objectives, or custom topics you'd like covered..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="submit-booking">Request Booking</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Speaking Topics -->
+            <section class="speaking-topics">
+                <h2 class="section-title">Available Workshop Topics</h2>
+                <div class="topics-grid">
+                    <div class="topic-card">
+                        <h3>Healthy Eating Made Fun</h3>
+                        <p>Interactive workshop focusing on making nutritious food choices enjoyable for children. Includes hands-on activities, games, and practical tips students can use immediately.</p>
+                        <div class="topic-details">
+                            <span><strong>Ages:</strong> 5-12 years</span>
+                            <span><strong>Duration:</strong> 45-60 minutes</span>
+                            <span><strong>Format:</strong> Interactive presentation with activities</span>
+                        </div>
+                    </div>
+
+                    <div class="topic-card">
+                        <h3>Sports Nutrition for Young Athletes</h3>
+                        <p>Essential nutrition strategies for young athletes, covering pre-activity fueling, hydration, and recovery nutrition with age-appropriate science explanations.</p>
+                        <div class="topic-details">
+                            <span><strong>Ages:</strong> 10-18 years</span>
+                            <span><strong>Duration:</strong> 60-90 minutes</span>
+                            <span><strong>Format:</strong> Presentation with Q&A</span>
+                        </div>
+                    </div>
+
+                    <div class="topic-card">
+                        <h3>Smart Lunch Box Strategies</h3>
+                        <p>Practical workshop for parents and teachers on creating balanced, appealing lunch boxes that children will actually eat while meeting nutritional needs.</p>
+                        <div class="topic-details">
+                            <span><strong>Audience:</strong> Parents & Teachers</span>
+                            <span><strong>Duration:</strong> 60-75 minutes</span>
+                            <span><strong>Format:</strong> Workshop with practical demonstrations</span>
+                        </div>
+                    </div>
+
+                    <div class="topic-card">
+                        <h3>Teen Nutrition & Body Image</h3>
+                        <p>Sensitive, evidence-based approach to nutrition education for teenagers, focusing on health rather than appearance, with practical life skills.</p>
+                        <div class="topic-details">
+                            <span><strong>Ages:</strong> 13-18 years</span>
+                            <span><strong>Duration:</strong> 75-90 minutes</span>
+                            <span><strong>Format:</strong> Interactive discussion with activities</span>
+                        </div>
+                    </div>
+
+                    <div class="topic-card">
+                        <h3>Performance & Recovery Nutrition</h3>
+                        <p>Advanced workshop for sports teams and clubs covering periodized nutrition, competition preparation, and recovery strategies for optimal athletic performance.</p>
+                        <div class="topic-details">
+                            <span><strong>Audience:</strong> Athletes & Coaches</span>
+                            <span><strong>Duration:</strong> 90-120 minutes</span>
+                            <span><strong>Format:</strong> Detailed presentation with team-specific advice</span>
+                        </div>
+                    </div>
+
+                    <div class="topic-card">
+                        <h3>Teacher Training: Integrating Nutrition</h3>
+                        <p>Professional development workshop helping teachers incorporate nutrition education into existing curriculum across multiple subjects.</p>
+                        <div class="topic-details">
+                            <span><strong>Audience:</strong> Teaching Staff</span>
+                            <span><strong>Duration:</strong> 2-3 hours</span>
+                            <span><strong>Format:</strong> Professional development with resources</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Testimonials -->
+        <section class="testimonials">
+            <div class="container">
+                <h2 class="section-title" style="color: white; margin-bottom: 3rem;">What Schools Are Saying</h2>
+                <div class="testimonials-grid">
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">"The students were completely engaged throughout the workshop. Alicia made nutrition fun and accessible for our 4th class students."</p>
+                        <div class="testimonial-author">Mary O'Connor</div>
+                        <div class="testimonial-school">Principal, St. Patrick's Primary School</div>
+                    </div>
+
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">"Our rugby team's performance improved significantly after implementing Alicia's nutrition strategies. The boys loved her practical approach."</p>
+                        <div class="testimonial-author">James Murphy</div>
+                        <div class="testimonial-school">Coach, Donegal GAA U16s</div>
+                    </div>
+
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">"The teacher training session was incredibly valuable. We now feel confident integrating nutrition into multiple subjects throughout the year."</p>
+                        <div class="testimonial-author">Sarah Kelly</div>
+                        <div class="testimonial-school">Deputy Principal, Letterkenny Secondary School</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Alicia Treanor Nutrition. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Calendar functionality
+        let currentDate = new Date(2025, 3, 1); // April 2025
+        const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+        // Sample booked dates (in reality, this would come from a database)
+        const bookedDates = [
+            '2025-04-15', '2025-04-22', '2025-04-28',
+            '2025-05-05', '2025-05-12', '2025-05-19'
+        ];
+
+        // Available dates (typically weekdays during school term)
+        const availableDates = [
+            '2025-04-03', '2025-04-04', '2025-04-08', '2025-04-09', '2025-04-10', '2025-04-11',
+            '2025-04-16', '2025-04-17', '2025-04-18', '2025-04-23', '2025-04-24', '2025-04-25',
+            '2025-04-29', '2025-04-30', '2025-05-01', '2025-05-02', '2025-05-06', '2025-05-07',
+            '2025-05-08', '2025-05-09', '2025-05-13', '2025-05-14', '2025-05-15', '2025-05-16',
+            '2025-05-20', '2025-05-21', '2025-05-22', '2025-05-23'
+        ];
+
+        function generateCalendar() {
+            const calendarGrid = document.getElementById('calendarGrid');
+            const currentMonth = document.getElementById('currentMonth');
+            
+            currentMonth.textContent = `${months[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
+            
+            // Clear previous calendar
+            calendarGrid.innerHTML = '';
+            
+            // Add day headers
+            daysOfWeek.forEach(day => {
+                const dayHeader = document.createElement('div');
+                dayHeader.className = 'calendar-day-header';
+                dayHeader.textContent = day;
+                calendarGrid.appendChild(dayHeader);
+            });
+            
+            // Get first day of month and number of days
+            const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+            const lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+            const startDate = new Date(firstDay);
+            startDate.setDate(startDate.getDate() - firstDay.getDay());
+            
+            // Generate 42 days (6 weeks)
+            for (let i = 0; i < 42; i++) {
+                const cellDate = new Date(startDate);
+                cellDate.setDate(startDate.getDate() + i);
+                
+                const dayCell = document.createElement('div');
+                dayCell.className = 'calendar-day';
+                dayCell.textContent = cellDate.getDate();
+                
+                const dateString = cellDate.toISOString().split('T')[0];
+                
+                if (cellDate.getMonth() !== currentDate.getMonth()) {
+                    dayCell.classList.add('other-month');
+                } else if (bookedDates.includes(dateString)) {
+                    dayCell.classList.add('booked');
+                    dayCell.title = 'This date is already booked';
+                } else if (availableDates.includes(dateString)) {
+                    dayCell.classList.add('available');
+                    dayCell.title = 'Available for booking';
+                    dayCell.addEventListener('click', () => selectDate(dateString));
+                }
+                
+                calendarGrid.appendChild(dayCell);
+            }
+        }
+
+        function selectDate(dateString) {
+            document.getElementById('preferredDate').value = dateString;
+            // Highlight selected date
+            document.querySelectorAll('.calendar-day').forEach(day => {
+                day.classList.remove('selected');
+            });
+            event.target.classList.add('selected');
+        }
+
+        // Navigation
+        document.getElementById('prevMonth').addEventListener('click', () => {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            generateCalendar();
+        });
+
+        document.getElementById('nextMonth').addEventListener('click', () => {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            generateCalendar();
+        });
+
+        // Initialize calendar
+        generateCalendar();
+
+        // Booking form submission
+        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const organizationName = formData.get('organizationName');
+            const contactName = formData.get('contactName');
+            const preferredDate = formData.get('preferredDate');
+            
+            alert(`Thank you ${contactName} from ${organizationName}! Your booking request for ${preferredDate} has been received. I'll contact you within 24 hours to confirm availability and discuss details.`);
+            
+            this.reset();
+        });
+
+        // Add some CSS for selected date
+        const style = document.createElement('style');
+        style.textContent = `
+            .calendar-day.selected {
+                background: #333 !important;
+                color: white !important;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

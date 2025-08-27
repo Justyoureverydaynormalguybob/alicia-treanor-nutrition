@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resources - Alicia Treanor Nutrition</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            color: #333;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 300;
+            color: #333;
+            letter-spacing: 1px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 3rem;
+        }
+
+        nav a {
+            color: #333;
+            text-decoration: none;
+            font-weight: 400;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover, nav a.active {
+            color: #666;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -5px;
+            left: 0;
+            background-color: #666;
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after, nav a.active::after {
+            width: 100%;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 100px;
+            padding: 4rem 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Resources Header */
+        .resources-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            padding: 4rem 0;
+            background: white;
+            margin-top: -4rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .resources-header h1 {
+            font-size: 3rem;
+            font-weight: 300;
+            color: #333;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .resources-header p {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* Categories */
+        .categories-nav {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 4rem;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            background: white;
+            border: 2px solid #333;
+            color: #333;
+            padding: 0.8rem 2rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .category-btn:hover,
+        .category-btn.active {
+            background: #333;
+            color: white;
+        }
+
+        /* Resource Categories */
+        .resource-category {
+            margin-bottom: 4rem;
+            background: white;
+            padding: 3rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+
+        .category-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .category-header h2 {
+            font-size: 2.2rem;
+            font-weight: 300;
+            color: #333;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .category-header p {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Resource Grid */
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        /* Resource Card */
+        .resource-card {
+            background: #f8f9fa;
+            border: 1px solid #eee;
+            padding: 2.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .resource-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: #333;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            background: white;
+        }
+
+        .resource-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .resource-card h3 {
+            font-size: 1.4rem;
+            font-weight: 400;
+            color: #333;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .resource-description {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .resource-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .resource-features li {
+            padding: 0.3rem 0;
+            color: #555;
+            font-size: 0.9rem;
+            position: relative;
+            padding-left: 1.2rem;
+        }
+
+        .resource-features li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .download-btn {
+            background: #333;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            width: 100%;
+            transition: all 0.3s ease;
+            font-weight: 400;
+        }
+
+        .download-btn:hover {
+            background: #555;
+        }
+
+        .premium-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #ff6b35;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Email Capture Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: white;
+            margin: 10% auto;
+            padding: 3rem;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #999;
+            transition: color 0.3s ease;
+        }
+
+        .close:hover {
+            color: #333;
+        }
+
+        .modal h3 {
+            font-size: 1.8rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .modal p {
+            margin-bottom: 2rem;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .email-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .email-input {
+            padding: 1rem;
+            border: 1px solid #ddd;
+            font-size: 1rem;
+        }
+
+        .email-input:focus {
+            outline: none;
+            border-color: #333;
+        }
+
+        .submit-email {
+            background: #333;
+            color: white;
+            border: none;
+            padding: 1rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: background 0.3s ease;
+        }
+
+        .submit-email:hover {
+            background: #555;
+        }
+
+        /* Newsletter Section */
+        .newsletter-section {
+            background: #333;
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .newsletter-section h3 {
+            font-size: 2rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .newsletter-section p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .newsletter-form {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            font-size: 1rem;
+            min-width: 300px;
+        }
+
+        .newsletter-btn {
+            background: white;
+            color: #333;
+            border: none;
+            padding: 1rem 2rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-btn:hover {
+            background: #f0f0f0;
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        footer p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                gap: 1.5rem;
+            }
+
+            .resources-header h1 {
+                font-size: 2rem;
+            }
+
+            .categories-nav {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .resources-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .resource-category {
+                padding: 2rem;
+            }
+
+            .modal-content {
+                margin: 5% auto;
+                padding: 2rem;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .newsletter-input {
+                min-width: auto;
+                width: 100%;
+            }
+        }
+
+        /* Hide/Show categories */
+        .resource-category.hidden {
+            display: none;
+        }
+
+        /* Animations */
+        .resource-card {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .resource-card:nth-child(2) { animation-delay: 0.1s; }
+        .resource-card:nth-child(3) { animation-delay: 0.2s; }
+        .resource-card:nth-child(4) { animation-delay: 0.3s; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">ALICIA TREANOR NUTRITION</div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="resources.html" class="active">Resources</a></li>
+                <li><a href="speaking.html">Speaking</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Resources Header -->
+        <section class="resources-header">
+            <div class="container">
+                <h1>Free Resources</h1>
+                <p>Evidence-based tools, templates, and guides to help teams optimize performance, schools deliver effective nutrition education, and food companies develop better products.</p>
+            </div>
+        </section>
+
+        <!-- Categories Navigation -->
+        <div class="container">
+            <div class="categories-nav">
+                <button class="category-btn active" data-category="all">All Resources</button>
+                <button class="category-btn" data-category="team-sports">Team Sports</button>
+                <button class="category-btn" data-category="school-programs">School Programs</button>
+                <button class="category-btn" data-category="food-development">Food Development</button>
+            </div>
+
+            <!-- Team Sports Resources -->
+            <section class="resource-category" data-category="team-sports">
+                <div class="category-header">
+                    <h2>Team Sports Resources</h2>
+                    <p>Practical tools to help coaches, teams, and sports organizations implement effective nutrition strategies</p>
+                </div>
+
+                <div class="resources-grid">
+                    <div class="resource-card">
+                        <span class="resource-icon">🏃‍♂️</span>
+                        <h3>Complete Team Nutrition Protocol</h3>
+                        <p class="resource-description">A comprehensive 20-page guide covering pre-season, in-season, and post-season nutrition strategies for team sports.</p>
+                        <ul class="resource-features">
+                            <li>Pre-competition meal timing charts</li>
+                            <li>Hydration monitoring templates</li>
+                            <li>Recovery nutrition protocols</li>
+                            <li>Travel nutrition checklists</li>
+                            <li>Supplement guidance charts</li>
+                        </ul>
+                        <button class="download-btn" data-resource="team-protocol">Download Free Guide</button>
+                    </div>
+
+                    <div class="resource-card">
+                        <span class="resource-icon">💧</span>
+                        <h3>Hydration Strategy Toolkit</h3>
+                        <p class="resource-description">Evidence-based hydration protocols with practical monitoring tools and electrolyte balance guidelines.</p>
+                        <ul class="resource-features">
+                            <li>Sweat rate calculation worksheets</li>
+                            <li>Fluid intake tracking sheets</li>
+                            <li>Environmental heat guidelines</li>
+                            <li>Electrolyte replacement charts</li>
+                            <li>Urine color monitoring guide</li>
+                        </ul>
+                        <button class="download-btn" data-resource="hydration-toolkit">Download Free Toolkit</button>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="premium-badge">Premium</div>
+                        <span class="resource-icon">📊</span>
+                        <h3>Season Periodization Planner</h3>
+                        <p class="resource-description">Advanced nutrition periodization templates aligned with training phases for optimal performance adaptation.</p>
+                        <ul class="resource-features">
+                            <li>12-week periodization templates</li>
+                            <li>Macronutrient adjustment guides</li>
+                            <li>Training load nutrition scaling</li>
+                            <li>Competition preparation protocols</li>
+                            <li>Recovery phase nutrition plans</li>
+                        </ul>
+                        <button class="download-btn" data-resource="periodization-planner">Get Premium Access</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- School Programs Resources -->
+            <section class="resource-category" data-category="school-programs">
+                <div class="category-header">
+                    <h2>School Program Resources</h2>
+                    <p>Ready-to-use materials for teachers and educators to deliver engaging nutrition education</p>
+                </div>
+
+                <div class="resources-grid">
+                    <div class="resource-card">
+                        <span class="resource-icon">🏫</span>
+                        <h3>Interactive Workshop Toolkit</h3>
+                        <p class="resource-description">Complete materials for running engaging nutrition workshops with students aged 8-16, including activities and presentations.</p>
+                        <ul class="resource-features">
+                            <li>Age-specific presentation slides</li>
+                            <li>Interactive game instructions</li>
+                            <li>Hands-on activity guides</li>
+                            <li>Student take-home materials</li>
+                            <li>Teacher preparation notes</li>
+                        </ul>
+                        <button class="download-btn" data-resource="workshop-toolkit">Download Free Toolkit</button>
+                    </div>
+
+                    <div class="resource-card">
+                        <span class="resource-icon">🍎</span>
+                        <h3>Healthy Lunch Box Guide</h3>
+                        <p class="resource-description">Kid-tested lunch ideas that balance nutrition with appeal, including shopping lists and prep instructions.</p>
+                        <ul class="resource-features">
+                            <li>25+ balanced lunch recipes</li>
+                            <li>Weekly meal prep guides</li>
+                            <li>Allergy-friendly alternatives</li>
+                            <li>Budget-conscious options</li>
+                            <li>Portion size visual guides</li>
+                        </ul>
+                        <button class="download-btn" data-resource="lunch-guide">Download Free Guide</button>
+                    </div>
+
+                    <div class="resource-card">
+                        <span class="resource-icon">📚</span>
+                        <h3>Curriculum Integration Templates</h3>
+                        <p class="resource-description">Ready-made lesson plans to integrate nutrition education into existing subjects like science, math, and health.</p>
+                        <ul class="resource-features">
+                            <li>Cross-curricular lesson plans</li>
+                            <li>Learning objective alignments</li>
+                            <li>Assessment rubrics</li>
+                            <li>Extension activity ideas</li>
+                            <li>Parent communication templates</li>
+                        </ul>
+                        <button class="download-btn" data-resource="curriculum-templates">Download Free Templates</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Food Development Resources -->
+            <section class="resource-category" data-category="food-development">
+                <div class="category-header">
+                    <h2>Food Development Resources</h2>
+                    <p>Professional tools and insights for food companies, startups, and product developers</p>
+                </div>
+
+                <div class="resources-grid">
+                    <div class="resource-card">
+                        <span class="resource-icon">🧪</span>
+                        <h3>Product Development Checklist</h3>
+                        <p class="resource-description">Step-by-step development process checklist covering concept to launch, with regulatory and testing milestones.</p>
+                        <ul class="resource-features">
+                            <li>Concept development framework</li>
+                            <li>Regulatory compliance checkpoints</li>
+                            <li>Testing protocol templates</li>
+                            <li>Cost analysis worksheets</li>
+                            <li>Launch preparation timeline</li>
+                        </ul>
+                        <button class="download-btn" data-resource="development-checklist">Download Free Checklist</button>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="premium-badge">Premium</div>
+                        <span class="resource-icon">📋</span>
+                        <h3>EU Regulatory Compliance Guide</h3>
+                        <p class="resource-description">Comprehensive guide to European food regulations, health claims, and labeling requirements for the Irish market.</p>
+                        <ul class="resource-features">
+                            <li>Health claims database</li>
+                            <li>Labeling requirement templates</li>
+                            <li>EFSA submission guidelines</li>
+                            <li>Nutritional analysis requirements</li>
+                            <li>Documentation checklists</li>
+                        </ul>
+                        <button class="download-btn" data-resource="regulatory-guide">Get Premium Access</button>
+                    </div>
+
+                    <div class="resource-card">
+                        <span class="resource-icon">📈</span>
+                        <h3>Market Analysis Template</h3>
+                        <p class="resource-description">Research framework for analyzing target markets, competitor products, and positioning strategies for healthy food products.</p>
+                        <ul class="resource-features">
+                            <li>Competitive analysis frameworks</li>
+                            <li>Consumer research templates</li>
+                            <li>Pricing strategy worksheets</li>
+                            <li>Market sizing calculations</li>
+                            <li>Positioning statement guides</li>
+                        </ul>
+                        <button class="download-btn" data-resource="market-analysis">Download Free Template</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Newsletter Section -->
+        <section class="newsletter-section">
+            <div class="container">
+                <h3>Get Exclusive Resources</h3>
+                <p>Join my newsletter for premium templates, early access to new resources, and monthly nutrition insights.</p>
+                <form class="newsletter-form">
+                    <input type="email" class="newsletter-input" placeholder="Enter your email address" required>
+                    <button type="submit" class="newsletter-btn">Get Premium Access</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Alicia Treanor Nutrition. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Email Capture Modal -->
+    <div id="emailModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Get Your Free Resource</h3>
+            <p id="modalDescription">Enter your email to download this valuable resource and join my nutrition insights newsletter.</p>
+            <form class="email-form" id="emailForm">
+                <input type="email" class="email-input" placeholder="Enter your email address" required>
+                <input type="hidden" id="resourceType" value="">
+                <button type="submit" class="submit-email">Download Now</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Category filtering
+        const categoryBtns = document.querySelectorAll('.category-btn');
+        const resourceCategories = document.querySelectorAll('.resource-category');
+
+        categoryBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const category = btn.dataset.category;
+                
+                // Update active button
+                categoryBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // Filter categories
+                resourceCategories.forEach(cat => {
+                    if (category === 'all') {
+                        cat.classList.remove('hidden');
+                    } else {
+                        if (cat.dataset.category === category) {
+                            cat.classList.remove('hidden');
+                        } else {
+                            cat.classList.add('hidden');
+                        }
+                    }
+                });
+            });
+        });
+
+        // Download button handling
+        const downloadBtns = document.querySelectorAll('.download-btn');
+        const modal = document.getElementById('emailModal');
+        const modalDescription = document.getElementById('modalDescription');
+        const resourceTypeInput = document.getElementById('resourceType');
+        const closeBtn = document.querySelector('.close');
+
+        downloadBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const resourceType = btn.dataset.resource;
+                const isPremium = btn.closest('.resource-card').querySelector('.premium-badge');
+                
+                resourceTypeInput.value = resourceType;
+                
+                if (isPremium) {
+                    modalDescription.textContent = 'This is a premium resource. Enter your email to get immediate access and join my exclusive newsletter.';
+                } else {
+                    modalDescription.textContent = 'Enter your email to download this free resource and get monthly nutrition insights.';
+                }
+                
+                modal.style.display = 'block';
+            });
+        });
+
+        // Close modal
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Email form submission
+        document.getElementById('emailForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('.email-input').value;
+            const resourceType = resourceTypeInput.value;
+            
+            // Simulate download
+            alert(`Thank you! Your resource "${resourceType}" is being prepared for download. Check your email shortly!`);
+            modal.style.display = 'none';
+            this.reset();
+        });
+
+        // Newsletter form
+        document.querySelector('.newsletter-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Welcome to the premium nutrition insights community! Check your email for exclusive resources.');
+            this.reset();
+        });
+
+        // Resource descriptions
+        const resourceDescriptions = {
+            'team-protocol': 'Complete Team Nutrition Protocol - Your comprehensive guide to team sports nutrition',
+            'hydration-toolkit': 'Hydration Strategy Toolkit - Evidence-based hydration protocols and tools',
+            'periodization-planner': 'Season Periodization Planner - Advanced nutrition periodization templates',
+            'workshop-toolkit': 'Interactive Workshop Toolkit - Complete materials for engaging school programs',
+            'lunch-guide': 'Healthy Lunch Box Guide - Kid-tested nutrition recipes and prep guides',
+            'curriculum-templates': 'Curriculum Integration Templates - Ready-made nutrition lesson plans',
+            'development-checklist': 'Product Development Checklist - Step-by-step food development process',
+            'regulatory-guide': 'EU Regulatory Compliance Guide - Complete European food regulations guide',
+            'market-analysis': 'Market Analysis Template - Research framework for food product positioning'
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Alicia Treanor Nutrition</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            color: #333;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 300;
+            color: #333;
+            letter-spacing: 1px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 3rem;
+        }
+
+        nav a {
+            color: #333;
+            text-decoration: none;
+            font-weight: 400;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover, nav a.active {
+            color: #666;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -5px;
+            left: 0;
+            background-color: #666;
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after, nav a.active::after {
+            width: 100%;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 100px;
+            padding: 4rem 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Blog Header */
+        .blog-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            padding: 4rem 0;
+            background: white;
+            margin-top: -4rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .blog-header h1 {
+            font-size: 3rem;
+            font-weight: 300;
+            color: #333;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .blog-header p {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* Categories Filter */
+        .categories-filter {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            background: white;
+            border: 2px solid #333;
+            color: #333;
+            padding: 0.8rem 2rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .category-btn:hover,
+        .category-btn.active {
+            background: #333;
+            color: white;
+        }
+
+        /* Blog Grid */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        /* Blog Card */
+        .blog-card {
+            background: white;
+            overflow: hidden;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 35px rgba(0,0,0,0.15);
+        }
+
+        .blog-image {
+            width: 100%;
+            height: 250px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .video-indicator {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .category-tag {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            background: #333;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .blog-content {
+            padding: 2rem;
+        }
+
+        .blog-date {
+            color: #999;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .blog-card h3 {
+            font-size: 1.4rem;
+            font-weight: 400;
+            color: #333;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .blog-excerpt {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .read-more {
+            color: #333;
+            text-decoration: none;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s ease;
+        }
+
+        .read-more:hover {
+            border-bottom-color: #333;
+        }
+
+        /* Newsletter Signup */
+        .newsletter {
+            background: #333;
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .newsletter h3 {
+            font-size: 2rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .newsletter p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .newsletter-form {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            font-size: 1rem;
+            min-width: 300px;
+        }
+
+        .newsletter-btn {
+            background: white;
+            color: #333;
+            border: none;
+            padding: 1rem 2rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-btn:hover {
+            background: #f0f0f0;
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        footer p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Featured Post */
+        .featured-post {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: white;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            min-height: 400px;
+        }
+
+        .featured-image {
+            background-size: cover;
+            background-position: center;
+        }
+
+        .featured-content {
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .featured-content .category-tag {
+            position: static;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .featured-content h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .featured-content .blog-excerpt {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                gap: 1.5rem;
+            }
+
+            .blog-header h1 {
+                font-size: 2rem;
+            }
+
+            .categories-filter {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .featured-post {
+                grid-template-columns: 1fr;
+            }
+
+            .featured-content {
+                padding: 2rem;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .newsletter-input {
+                min-width: auto;
+                width: 100%;
+            }
+        }
+
+        /* Hide/Show based on category */
+        .blog-card.hidden {
+            display: none;
+        }
+
+        /* Animations */
+        .blog-card {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .blog-card:nth-child(2) { animation-delay: 0.1s; }
+        .blog-card:nth-child(3) { animation-delay: 0.2s; }
+        .blog-card:nth-child(4) { animation-delay: 0.3s; }
+        .blog-card:nth-child(5) { animation-delay: 0.4s; }
+        .blog-card:nth-child(6) { animation-delay: 0.5s; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">ALICIA TREANOR NUTRITION</div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="blog.html" class="active">Blog</a></li>
+                <li><a href="resources.html">Resources</a></li>
+                <li><a href="speaking.html">Speaking</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Blog Header -->
+        <section class="blog-header">
+            <div class="container">
+                <h1>Nutrition Insights</h1>
+                <p>Expert insights on team nutrition, school education programs, and food product development. Practical advice and behind-the-scenes content to help teams, schools, and food companies make informed nutrition decisions.</p>
+            </div>
+        </section>
+
+        <!-- Categories Filter -->
+        <div class="container">
+            <div class="categories-filter">
+                <button class="category-btn active" data-category="all">All Posts</button>
+                <button class="category-btn" data-category="team-sports">Team Sports</button>
+                <button class="category-btn" data-category="school-programs">School Programs</button>
+                <button class="category-btn" data-category="food-development">Food Development</button>
+                <button class="category-btn" data-category="videos">Videos</button>
+            </div>
+
+            <!-- Blog Grid -->
+            <div class="blog-grid">
+                <!-- Featured Post -->
+                <article class="featured-post blog-card" data-category="team-sports">
+                    <div class="featured-image" style="background-image: url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80');"></div>
+                    <div class="featured-content">
+                        <span class="category-tag">Team Sports</span>
+                        <div class="blog-date">March 15, 2025</div>
+                        <h3>Fueling GAA Teams Through Championship Season</h3>
+                        <p class="blog-excerpt">A comprehensive guide to nutrition periodization for GAA teams, covering everything from pre-season preparation to championship match-day protocols. Learn how proper timing of nutrition can be the difference between winning and losing.</p>
+                        <a href="#" class="read-more">Read Full Article</a>
+                    </div>
+                </article>
+
+                <!-- Regular Blog Posts -->
+                <article class="blog-card" data-category="school-programs videos">
+                    <div class="blog-image" style="background-image: url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80');">
+                        <span class="video-indicator">Video</span>
+                        <span class="category-tag">School Programs</span>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-date">March 12, 2025</div>
+                        <h3>Making Nutrition Fun: Interactive Workshop Ideas</h3>
+                        <p class="blog-excerpt">Watch behind-the-scenes footage from my recent primary school workshops and discover the interactive activities that get kids excited about healthy eating...</p>
+                        <a href="#" class="read-more">Watch Video</a>
+                    </div>
+                </article>
+
+                <article class="blog-card" data-category="food-development">
+                    <div class="blog-image" style="background-image: url('https://images.unsplash.com/photo-1582750433449-648ed127bb54?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80');">
+                        <span class="category-tag">Food Development</span>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-date">March 10, 2025</div>
+                        <h3>From Concept to Shelf: Developing Irish Sports Bars</h3>
+                        <p class="blog-excerpt">The complete journey of developing a new line of sports nutrition bars for the Irish market, including regulatory hurdles, taste testing, and market positioning strategies...</p>
+                        <a href="#" class="read-more">Read More</a>
+                    </div>
+                </article>
+
+                <article class="blog-card" data-category="team-sports">
+                    <div class="blog-image" style="background-image: url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80');">
+                        <span class="category-tag">Team Sports</span>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-date">March 8, 2025</div>
+                        <h3>Hydration Strategies for Rugby Training Camps</h3>
+                        <p class="blog-excerpt">Essential hydration protocols for intensive training camps, including electrolyte balance, monitoring strategies, and practical implementation tips for coaching staff...</p>
+                        <a href="#" class="read-more">Read More</a>
+                    </div>
+                </article>
+
+                <article class="blog-card" data-category="school-programs">
+                    <div class="blog-image" style="background-image: url('https://images.unsplash.com/photo-1498837167922-ddd27525d352?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80');">
+                        <span class="category-tag">School Programs</span>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-date">March 5, 2025</div>
+                        <h3>Healthy Lunch Box Ideas Students Actually Want</h3>
+                        <p class="blog-excerpt">Practical, tested lunch box solutions that balance nutrition with appeal. These recipes have been kid-tested and approved in over 20 schools across Donegal...</p>
+                        <a href="#" class="read-more">Read More</a>
+                    </div>
+                </article>
+
+                <article class="blog-card" data-category="food-development videos">
+                    <div class="blog-image" style="background-image: url('https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80');">
+                        <span class="video-indicator">Video</span>
+                        <span class="category-tag">Food Development</span>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-date">March 3, 2025</div>
+                        <h3>Kitchen Lab: Testing New Protein Formulations</h3>
+                        <p class="blog-excerpt">Take a behind-the-scenes look at my product development kitchen where we test new protein formulations and perfect recipes before they hit the market...</p>
+                        <a href="#" class="read-more">Watch Video</a>
+                    </div>
+                </article>
+
+                <article class="blog-card" data-category="team-sports">
+                    <div class="blog-image" style="background-image: url('https://images.unsplash.com/photo-1490645935967-10de6ba17061?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80');">
+                        <span class="category-tag">Team Sports</span>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-date">February 28, 2025</div>
+                        <h3>Pre-Competition Meal Timing for Team Sports</h3>
+                        <p class="blog-excerpt">The science behind optimal meal timing before competition, with practical guidelines for different sports and competition schedules. Includes downloadable team templates...</p>
+                        <a href="#" class="read-more">Read More</a>
+                    </div>
+                </article>
+
+                <article class="blog-card" data-category="school-programs">
+                    <div class="blog-image" style="background-image: url('https://images.unsplash.com/photo-1516534775068-ba3e7458af70?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80');">
+                        <span class="category-tag">School Programs</span>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-date">February 25, 2025</div>
+                        <h3>Teaching Nutrition to Teenagers: What Works</h3>
+                        <p class="blog-excerpt">Lessons learned from delivering nutrition education to secondary school students. Discover which approaches resonate and how to make nutrition relevant to teen priorities...</p>
+                        <a href="#" class="read-more">Read More</a>
+                    </div>
+                </article>
+
+                <article class="blog-card" data-category="food-development">
+                    <div class="blog-image" style="background-image: url('https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80');">
+                        <span class="category-tag">Food Development</span>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-date">February 22, 2025</div>
+                        <h3>Navigating EU Health Claims Regulations</h3>
+                        <p class="blog-excerpt">A practical guide to understanding and complying with European health claims regulations when developing functional foods and supplements for the Irish market...</p>
+                        <a href="#" class="read-more">Read More</a>
+                    </div>
+                </article>
+            </div>
+        </div>
+
+        <!-- Newsletter Signup -->
+        <section class="newsletter">
+            <div class="container">
+                <h3>Stay Updated</h3>
+                <p>Get the latest nutrition insights, team strategies, and product development tips delivered to your inbox monthly.</p>
+                <form class="newsletter-form">
+                    <input type="email" class="newsletter-input" placeholder="Enter your email address" required>
+                    <button type="submit" class="newsletter-btn">Subscribe</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Alicia Treanor Nutrition. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Category filtering
+        const categoryBtns = document.querySelectorAll('.category-btn');
+        const blogCards = document.querySelectorAll('.blog-card');
+
+        categoryBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const category = btn.dataset.category;
+                
+                // Update active button
+                categoryBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // Filter posts
+                blogCards.forEach(card => {
+                    if (category === 'all') {
+                        card.classList.remove('hidden');
+                    } else {
+                        if (card.dataset.category.includes(category)) {
+                            card.classList.remove('hidden');
+                        } else {
+                            card.classList.add('hidden');
+                        }
+                    }
+                });
+            });
+        });
+
+        // Newsletter form
+        document.querySelector('.newsletter-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for subscribing! You\'ll receive our monthly nutrition insights newsletter.');
+            this.reset();
+        });
+
+        // Blog card click handlers
+        blogCards.forEach(card => {
+            card.addEventListener('click', function(e) {
+                if (!e.target.classList.contains('read-more')) {
+                    // Simulate opening blog post
+                    console.log('Opening blog post...');
+                }
+            });
+        });
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
