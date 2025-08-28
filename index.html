@@ -669,6 +669,64 @@
             color: #333;
         }
 
+        /* Newsletter within Contact Section */
+        .newsletter-section {
+            margin-top: 6rem;
+            padding-top: 2rem;
+            border-top: 1px solid #eee;
+        }
+
+        .newsletter-section h4 {
+            font-size: 1.4rem;
+            font-weight: 300;
+            color: #333;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .newsletter-section p {
+            font-size: 0.95rem;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .newsletter-form-compact {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .newsletter-input-compact {
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            font-size: 0.95rem;
+            background: #f8f9fa;
+            transition: border-color 0.3s ease;
+        }
+
+        .newsletter-input-compact:focus {
+            outline: none;
+            border-color: #333;
+        }
+
+        .newsletter-btn-compact {
+            background: #333;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            font-weight: 400;
+        }
+
+        .newsletter-btn-compact:hover {
+            background: #555;
+        }
+
         /* Footer */
         footer {
             background: #333;
@@ -858,6 +916,22 @@
                 height: 40px;
                 font-size: 1.5rem;
             }
+
+            /* Newsletter Signup */
+            .newsletter-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 2rem;
+            }
+
+            .newsletter-form {
+                min-width: auto;
+                width: 100%;
+            }
+
+            .newsletter-input {
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
         }
 
         @media (max-width: 480px) {
@@ -891,6 +965,8 @@
                 padding: 0.8rem 1.5rem;
                 font-size: 0.8rem;
             }
+
+
         }
 
         /* Landscape phone orientation */
@@ -1160,6 +1236,16 @@
                         <span class="contact-icon">🕒</span>
                         <span>Mon-Fri: 9AM-5PM</span>
                     </div>
+
+                    <!-- Newsletter Signup -->
+                    <div class="newsletter-section">
+                        <h4>Stay Updated</h4>
+                        <p>Get weekly nutrition insights and tips delivered to your inbox.</p>
+                        <form class="newsletter-form-compact" id="newsletterForm">
+                            <input type="email" class="newsletter-input-compact" placeholder="Enter your email" required>
+                            <button type="submit" class="newsletter-btn-compact">Subscribe</button>
+                        </form>
+                    </div>
                 </div>
 
                 <form class="contact-form animate-on-scroll">
@@ -1414,6 +1500,14 @@
 
         // Start the slider
         startSlider();
+
+        // Newsletter form submission
+        document.getElementById('newsletterForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('.newsletter-input-compact').value;
+            alert('Thank you for subscribing! You\'ll receive our weekly nutrition insights newsletter.');
+            this.reset();
+        });
     </script>
 </body>
 </html>
