@@ -85,6 +85,21 @@
             width: 100%;
         }
 
+        /* Coming Soon styling */
+        .coming-soon {
+            opacity: 0.6;
+            font-style: italic;
+            cursor: default !important;
+        }
+
+        .coming-soon:hover {
+            color: #333 !important;
+        }
+
+        .coming-soon::after {
+            display: none !important;
+        }
+
         /* Mobile Menu */
         .mobile-menu-toggle {
             display: none;
@@ -415,6 +430,145 @@
             opacity: 0.8;
         }
 
+        /* Success Stories Slider */
+        .success-stories {
+            padding: 4rem 0;
+            background: #333;
+            color: white;
+        }
+
+        .slider-container {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .slider-wrapper {
+            overflow: hidden;
+            border-radius: 0;
+        }
+
+        .slide {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            min-height: 350px;
+        }
+
+        .slide.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .success-story {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 3rem;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            height: 350px;
+            overflow: hidden;
+        }
+
+        .story-content h3 {
+            font-size: 1.8rem;
+            font-weight: 400;
+            color: #f0f0f0;
+            margin-bottom: 1.5rem;
+            letter-spacing: 1px;
+        }
+
+        .story-content p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 2rem;
+            color: #e0e0e0;
+            font-style: italic;
+        }
+
+        .story-author {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .story-author strong {
+            font-size: 1.1rem;
+            color: #f0f0f0;
+        }
+
+        .story-author span {
+            font-size: 0.9rem;
+            color: #bbb;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .story-image {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .client-photo {
+            width: 100%;
+            max-width: 200px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Slider Controls */
+        .slider-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .prev-btn, .next-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            font-size: 2rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .prev-btn:hover, .next-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .slider-dots {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            background: white;
+            transform: scale(1.2);
+        }
+
         /* Contact Section */
         .contact {
             padding: 6rem 0;
@@ -680,6 +834,30 @@
             .stat-item h3 {
                 font-size: 2rem;
             }
+
+            /* Success Stories Slider */
+            .success-story {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                padding: 2rem;
+                text-align: center;
+                height: auto;
+                min-height: 400px;
+            }
+
+            .story-content h3 {
+                font-size: 1.5rem;
+            }
+
+            .story-content p {
+                font-size: 1rem;
+            }
+
+            .prev-btn, .next-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1.5rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -756,6 +934,7 @@
             <ul class="nav-menu">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="#services">Services</a></li>
+                <li><a href="#" class="coming-soon">Blog (Coming Soon)</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
             <button class="mobile-menu-toggle" id="mobileMenuToggle">☰</button>
@@ -763,6 +942,7 @@
                 <ul class="mobile-nav">
                     <li><a href="index.html">Home</a></li>
                     <li><a href="#services">Services</a></li>
+                    <li><a href="#" class="coming-soon">Blog (Coming Soon)</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </div>
@@ -850,19 +1030,105 @@
         <div class="container">
             <div class="stats-grid">
                 <div class="stat-item animate-on-scroll">
-                    <h3>50+</h3>
+                    <h3 class="stat-number" data-target="50">0</h3>
                     <p>Teams Supported</p>
                 </div>
                 <div class="stat-item animate-on-scroll">
-                    <h3>100+</h3>
+                    <h3 class="stat-number" data-target="100">0</h3>
                     <p>Schools Visited</p>
                 </div>
                 <div class="stat-item animate-on-scroll">
-                    <h3>25+</h3>
+                    <h3 class="stat-number" data-target="25">0</h3>
                     <p>Products Developed</p>
                 </div>
                 <div class="stat-item animate-on-scroll">
+                    <h3 class="stat-number" data-target="8000">0</h3>
                     <p>Students Educated</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Client Success Stories Slider -->
+    <section class="success-stories">
+        <div class="container">
+            <h2 class="section-title" style="color: white; margin-bottom: 3rem;">Client Success Stories</h2>
+            <div class="slider-container">
+                <div class="slider-wrapper">
+                    <div class="slide active">
+                        <div class="success-story">
+                            <div class="story-content">
+                                <h3>Donegal GAA U16 Championship Win</h3>
+                                <p>"After implementing Alicia's nutrition protocols, our team saw a 20% improvement in second-half performance. The boys had more energy, fewer cramps, and better recovery between matches. We went on to win the county championship for the first time in 8 years."</p>
+                                <div class="story-author">
+                                    <strong>James Murphy</strong>
+                                    <span>Head Coach, Donegal GAA U16s</span>
+                                </div>
+                            </div>
+                            <div class="story-image">
+                                <img src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80" alt="Sports team celebrating victory" class="client-photo">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="slide">
+                        <div class="success-story">
+                            <div class="story-content">
+                                <h3>St. Patrick's Primary School Transformation</h3>
+                                <p>"The change in our students' eating habits after Alicia's workshops was remarkable. Lunch box choices improved dramatically, and parents reported kids asking for healthier snacks. We've had her back every term for 3 years running."</p>
+                                <div class="story-author">
+                                    <strong>Mary O'Connor</strong>
+                                    <span>Principal, St. Patrick's Primary School</span>
+                                </div>
+                            </div>
+                            <div class="story-image">
+                                <img src="https://images.unsplash.com/photo-1544717297-fa95b6ee9643?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=869&q=80" alt="Students in classroom learning" class="client-photo">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="slide">
+                        <div class="success-story">
+                            <div class="story-content">
+                                <h3>GreenLeaf Foods Product Launch Success</h3>
+                                <p>"Alicia guided us through the entire development of our plant-based protein bar. From formulation to EU regulatory compliance, her expertise was invaluable. The product launched successfully in 200+ stores across Ireland."</p>
+                                <div class="story-author">
+                                    <strong>David Chen</strong>
+                                    <span>Founder, GreenLeaf Foods</span>
+                                </div>
+                            </div>
+                            <div class="story-image">
+                                <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80" alt="Healthy food products on store shelves" class="client-photo">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="slide">
+                        <div class="success-story">
+                            <div class="story-content">
+                                <h3>Letterkenny Secondary School Program</h3>
+                                <p>"Our teacher training session with Alicia revolutionized how we approach nutrition education. We now confidently integrate nutrition into science, PE, and home economics. Student engagement has never been higher."</p>
+                                <div class="story-author">
+                                    <strong>Sarah Kelly</strong>
+                                    <span>Deputy Principal, Letterkenny Secondary School</span>
+                                </div>
+                            </div>
+                            <div class="story-image">
+                                <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=832&q=80" alt="Teachers in training session" class="client-photo">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="slider-controls">
+                    <button class="prev-btn" id="prevBtn">‹</button>
+                    <div class="slider-dots">
+                        <span class="dot active" data-slide="0"></span>
+                        <span class="dot" data-slide="1"></span>
+                        <span class="dot" data-slide="2"></span>
+                        <span class="dot" data-slide="3"></span>
+                    </div>
+                    <button class="next-btn" id="nextBtn">›</button>
                 </div>
             </div>
         </div>
@@ -962,6 +1228,15 @@
             }
         });
 
+        // Handle coming soon links
+        document.querySelectorAll('.coming-soon').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                // Optional: Show a small notification
+                // alert('Blog coming soon! Stay tuned for nutrition insights and updates.');
+            });
+        });
+
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -1028,6 +1303,117 @@
         setVHProperty();
         window.addEventListener('resize', setVHProperty);
         window.addEventListener('orientationchange', setVHProperty);
+
+        // Animated Statistics Counter
+        function animateCounter(element, target, duration = 2000) {
+            const start = parseInt(element.textContent);
+            const increment = (target - start) / (duration / 16);
+            let current = start;
+            
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    element.textContent = target >= 1000 ? `${target.toLocaleString()}+` : `${target}+`;
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(current).toLocaleString();
+                }
+            }, 16);
+        }
+
+        // Trigger counter animation when stats section is visible
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !entry.target.classList.contains('counted')) {
+                    entry.target.classList.add('counted');
+                    const statNumbers = entry.target.querySelectorAll('.stat-number');
+                    
+                    statNumbers.forEach((stat, index) => {
+                        const target = parseInt(stat.dataset.target);
+                        setTimeout(() => {
+                            animateCounter(stat, target);
+                        }, index * 200); // Stagger the animations
+                    });
+                }
+            });
+        }, { threshold: 0.3 });
+
+        const statsSection = document.querySelector('.stats');
+        if (statsSection) {
+            statsObserver.observe(statsSection);
+        }
+
+        // Success Stories Slider
+        let currentSlide = 0;
+        let sliderInterval;
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.dot');
+        const totalSlides = slides.length;
+        const sliderContainer = document.querySelector('.slider-container');
+
+        function showSlide(index) {
+            // Hide all slides
+            slides.forEach(slide => {
+                slide.classList.remove('active');
+            });
+            
+            // Remove active from all dots
+            dots.forEach(dot => {
+                dot.classList.remove('active');
+            });
+            
+            // Show current slide
+            slides[index].classList.add('active');
+            dots[index].classList.add('active');
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            showSlide(currentSlide);
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            showSlide(currentSlide);
+        }
+
+        function startSlider() {
+            sliderInterval = setInterval(nextSlide, 15000); // 15 seconds
+        }
+
+        function stopSlider() {
+            clearInterval(sliderInterval);
+        }
+
+        // Event listeners for slider controls
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            nextSlide();
+            stopSlider();
+            startSlider(); // Restart timer after manual navigation
+        });
+
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            prevSlide();
+            stopSlider();
+            startSlider(); // Restart timer after manual navigation
+        });
+
+        // Dot navigation
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentSlide = index;
+                showSlide(currentSlide);
+                stopSlider();
+                startSlider(); // Restart timer after manual navigation
+            });
+        });
+
+        // Pause on hover, resume on mouse leave
+        sliderContainer.addEventListener('mouseenter', stopSlider);
+        sliderContainer.addEventListener('mouseleave', startSlider);
+
+        // Start the slider
+        startSlider();
     </script>
 </body>
 </html>
